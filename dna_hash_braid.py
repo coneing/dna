@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # dna_hash_braid.py - Experimental DNA-mimetic hashing via braided spring + NU curve + palindromic zero
-# Copyright 2025 Todd Macrae Hutchinson
+# Copyright 2025 Coneing
 #
 # Licensed under the GNU Affero General Public License v3.0 or later
 # This program is free software: you can redistribute it and/or modify
