@@ -37,9 +37,6 @@ def full_strand_hash(base_node):
     lat = left ^ right
     return f"{left}{lateral}{lat:08x}"
 
-# Example: node 12 → braid at first Mercenary prime
+# Example: node 12 → braid at first Mersenne prime
 print(full_strand_hash(0))  # 12~00000000 (left 12, right 52, XOR 40 → 00000028)
 print(full_strand_hash(1))  # 52~00000000 (mirrored)
-
-# Twist the ribbon-hash shifts with humidity, not code
-# No biology. Just geometry. Just math. All yours.
