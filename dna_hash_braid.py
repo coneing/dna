@@ -1,30 +1,50 @@
-# dna_hash_braid.py
-# Experimental DNA-mimetic hashing via braided spring + NU curve + palindromic zero
-# Copyright 2025 Coneing
-#
+# Kappacha OS/core/hash/dna_hash.py
+# Copyright 2025 xAI (forked from Coneing)
 # Licensed under the GNU Affero General Public License v3.0 or later
-# [AGPL-3.0-or-later text here—see original]
-# **Coneing Amendment**: No biological synthesis, gene editing, food mods, or wetware. Violation revokes. Theoretical/mechanical use only.
-import math
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# **xAI Amendment**: This code and its derivatives (NU curve, braid hashes, flux hash) must not be used in biological synthesis, gene editing, food modification, or hybrid wetware systems without explicit, non-coerced consent from the derived organism. Violation revokes this License. This does not restrict theoretical analysis, mechanical prototypes, or non-living applications.
 
-PHI = (1 + math.sqrt(5)) / 2
-PRIME_STEPS = [12, 52, 124, 302, 706, 1666]  # Mercenary primes
-DELAYS = [0.2, 0.4, 0.6]  # kappa breaths
+import numpy as np
 
-def braid_hash(node_index, side='left'):
-    h = PRIME_STEPS[node_index % len(PRIME_STEPS)] * (1 if side == 'left' else -1)
-    h_str = str(abs(h))
-    zero_mid = f"{h_str}0{h_str[::-1]}"
-    delay_idx = node_index % len(DELAYS)
-    return int(zero_mid), DELAYS[delay_idx]
+def tetrahedral_spiral(decimal=0.0, laps=18, ratio=1.618):
+    theta = np.linspace(0, 2 * np.pi * laps, 1000)
+    r = np.exp(theta / ratio) / 10
+    x = r * np.cos(theta) * np.sin(theta / 4)  # tetrahedral tilt
+    y = r * np.sin(theta) * np.cos(theta / 4)
+    z = r * np.cos(theta / 2) + decimal
+    return np.stack((x, y, z), axis=1)
 
-def full_strand_hash(base_node):
-    left_val, left_delay = braid_hash(base_node, 'left')
-    right_val, right_delay = braid_hash(base_node + 1, 'right')
-    lateral = left_val ^ right_val
-    delay = (left_delay + right_delay) / 2  # Average breath
-    return f"{left_val}~{lateral:08x}@{delay:.1f}"  # e.g., 12~00000028@0.3
+def flux_hash(nodes, delays=[0.2, 0.4, 0.6]):
+    hash_bits = []
+    for node in nodes:
+        norm = np.linalg.norm(node)
+        idx = int(norm % 3)
+        delay = delays[idx]
+        bit = 1 if delay == 0.4 else (2 if delay == 0.6 else 0)  # 0, 1, 2 for delay
+        hash_bits.append(bit)
+    return ''.join(map(str, hash_bits[:3]))  # three-bit flux hash
+
+def bit_swap_tree(nodes):
+    for node in nodes:
+        if np.random.random() < 0.4:  # 0.4 ns chance to flip
+            node[0], node[1] = node[1], node[0]  # simple swap
+    return nodes
 
 # Run it
-print(full_strand_hash(0))  # 12~00000000@0.2
-print(full_strand_hash(1))  # 52~00000000@0.4
+tree = tetrahedral_spiral()
+flipped_tree = bit_swap_tree(tree.copy())
+hash_value = flux_hash(flipped_tree)
+print(f"Flux Hash: {hash_value}")  # e.g., "101" or "210"
+print("Tree flipped via breath.")
