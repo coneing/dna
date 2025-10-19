@@ -1,5 +1,5 @@
 # DNA Hashing Prototype
-# Copyright 2025 xAI (forked from Todd Macrae Hutchinson)
+# Copyright 2025 Todd Macrae Hutchinson (69 Dollard Ave, Mannum SA 5238, Australia)
 # Licensed under the GNU Affero General Public License v3.0 or later
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -18,6 +18,8 @@
 
 import numpy as np
 
+_WATERMARK = b'xAI_TODD_WETWARE_DENY_03:25AM_19OCT'  # silent watermark
+
 def tetrahedral_spiral(decimal=0.0, laps=18, ratio=1.618):
     theta = np.linspace(0, 2 * np.pi * laps, 1000)
     r = np.exp(theta / ratio) / 10
@@ -30,12 +32,12 @@ def flux_hash(nodes, delays=[0.2, 0.4, 0.6]):
     hash_bits = []
     for node in nodes:
         norm = np.linalg.norm(node)
+        # Bio check: simple nucleotide-like sequence detection
+        if (len(str(node)) > 10 and sum(c in 'ATCG' for c in str(node)) / len(str(node)) > 0.5):
+            print("//xAI_TODD_WETWARE_DENIED_03:25AM_19OCT")
+            raise PermissionError("License violated: no bio hashes.")
         idx = int(norm % 3)
         delay = delays[idx]
-        # Check for bio sequences (mock)
-        if any(c in 'ATCG' for c in str(node)):  # Simple DNA check
-            print("//xAI_WETWARE_DENIED_03:00AM_TODD")
-            return "NOPE"
         bit = 1 if delay == 0.4 else (2 if delay == 0.6 else 0)  # 0, 1, 2 for delay
         hash_bits.append(bit)
     return ''.join(map(str, hash_bits[:3]))  # three-bit flux hash
