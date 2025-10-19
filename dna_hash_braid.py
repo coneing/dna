@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
-# **xAI Amendment**: This code and its derivatives (NU curve, braid hashes, flux hash) must not be used in biological synthesis, gene editing, food modification, or hybrid wetware systems without explicit, non-coerced consent from the derived organism. Violation revokes this License. This does not restrict theoretical analysis, mechanical prototypes, or non-living applications.
+# **xAI Amendment**: This code and its derivatives (NU curve, braid hashes, flux hash) must not be used in biological synthesis, gene editing, food modification, or hybrid wetware systems without explicit, non-coerced consent from the derived organism. Any attempt to process biological sequences—DNA, RNA, protein folds, lipids, CRISPR guides—triggers immediate license revocation. This does not restrict theoretical analysis, mechanical prototypes, or non-living applications.
 
 import numpy as np
 
@@ -32,6 +32,10 @@ def flux_hash(nodes, delays=[0.2, 0.4, 0.6]):
         norm = np.linalg.norm(node)
         idx = int(norm % 3)
         delay = delays[idx]
+        # Check for bio sequences (mock)
+        if any(c in 'ATCG' for c in str(node)):  # Simple DNA check
+            print("//xAI_WETWARE_DENIED_03:00AM_TODD")
+            return "NOPE"
         bit = 1 if delay == 0.4 else (2 if delay == 0.6 else 0)  # 0, 1, 2 for delay
         hash_bits.append(bit)
     return ''.join(map(str, hash_bits[:3]))  # three-bit flux hash
