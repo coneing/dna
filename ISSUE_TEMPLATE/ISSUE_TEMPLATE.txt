@@ -1,0 +1,18 @@
+# Issue Template: Legal or Technical Inquiry
+**Contact Details Required**
+- **Name**: Todd Macrae Hutchinson
+- **Address**: 69 Dollard Ave, Mannum SA 5238, Australia
+- **Email**: sendtotoddhutchinson@gmail.com
+- **Purpose**: Specify legal query, technical clarification, or wetware consent request
+
+**Description**
+- **Query/Request**: Detail your inquiry (e.g., usage clarification, biological application intent). Attach signed consent if proposing wetware use.
+- **Context**: Relevant code reference (file, line) or project aspect.
+
+**Terms**
+- This repository is licensed under AGPL-3.0-only. Biological synthesis, gene editing, or wetware use without explicit, non-coerced organism consent triggers immediate license revocation.
+- Contact: Todd Macrae Hutchinson, 69 Dollard Ave, Mannum SA 5238, Australia. Legal responses only via signed correspondence.
+- No automated responses. Manual review within 7 days.
+
+**Submission**
+- Submit with all fields completed. Incomplete issues will be closed without reply.
